@@ -13,7 +13,7 @@ def home_page(request):
 
 
 #list contacts
-def show_phone_book(request, phone_number=None):
+def show_phone_book(request):
     phones = Telephone_book.objects.all()
     return render(request, 'phone_numbers/phone book.html', {'phones': phones})
 
