@@ -1,0 +1,120 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Телефонна книга</title>
+        <link rel="stylesheet" href="{%static 'css/phone book.css'%}" >
+    </head>
+
+<!--таблиця телефонної книги-->
+<p>
+    Телефонна книга
+</p>
+
+{% comment %} logout {% endcomment %}
+<div class="button-logout">
+    <a href="/">
+        <button>logout</button>
+    </a>
+</div> 
+
+
+<body>
+{% comment %} Пошук(фільтрація) по таблиці {% endcomment %}
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Поиск имен..">
+
+
+
+
+{% comment %} таблиця телефонних номерів{% endcomment %}
+    <table id="myTable">
+        <thead>
+            <tr>
+                <th data-type= "string">Прізвище</th>
+                <th data-type= "string">Імя</th>
+                <th data-type= "string">По-батькові</th>
+                <th data-type= "string">Тип контакту</th>
+                <th data-type= "number">Номер телефону</th>
+                <th data-type= "string">Електронна адреса</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in phones %}
+            <tr class="header">
+                <td>{{p.surname}}</td>
+                <td>{{p.name}}</td>
+                <td>{{p.father_name}}</td>
+                <td>{{p.type_contact}}</td> 
+                <td>{{p.phone}}</td>
+                <td>{{p.email}}</td>
+                <td>
+                <a href="{% url 'edit_contact' p.id %}">Редагувати</a>
+                <form action="{% url 'delete_contact' p.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit">Видалити</button>
+
+                </td>
+            </tr>
+            {% endfor %}
+            <a href="{% url 'add_contact' %}" class="btn">Додати новий контакт</a>
+        </tbody>
+    </table>
+
+
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+
+{% comment %} Сортування в електронній книзі {% endcomment %}
+<script>
+    myTable.onclick = function(e) {
+        if (e.target.tagName !== 'TH') return;
+    
+        let th = e.target;
+        let colNum = th.cellIndex;
+        let type = th.dataset.type;
+        let tbody = myTable.querySelector('tbody');
+        let rowsArray = Array.from(tbody.rows);
+    
+        let compare = type === 'number'
+            ? (rowA, rowB) => rowA.cells[colNum].innerText - rowB.cells[colNum].innerText
+            : (rowA, rowB) => rowA.cells[colNum].innerText.localeCompare(rowB.cells[colNum].innerText);
+    
+        rowsArray.sort(compare);
+        tbody.append(...rowsArray);
+    }
+</script>
+
+
+{% comment %} Пошук в телефонній книзі {% endcomment %}
+
+
+<script>
+    function myFunction() {
+        var filter = document.getElementById("myInput").value.toUpperCase();
+        var rows = document.querySelectorAll("#myTable tr");
+      
+        rows.forEach(row => {
+          var cell = row.querySelector("td");
+          row.style.display = cell && cell.textContent.toUpperCase().includes(filter) ? "" : "none";
+        });
+      }
+</script>
+
+
+
+
+</body>
+
+
+
+
+</html> 
+

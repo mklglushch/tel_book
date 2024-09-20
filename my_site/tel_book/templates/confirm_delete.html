@@ -1,0 +1,6 @@
+<h1>Ви дійсно хочете видалити контакт?</h1>
+<p>{{ contact.first_name }} {{ contact.last_name }}</p>
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit">Видалити</button>
+</form>
