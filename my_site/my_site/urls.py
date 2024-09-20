@@ -14,9 +14,6 @@ urlpatterns = [
     path('add/', add_contact, name='add_contact'),
     path('delete_contact/<int:id>/', delete_contact, name='delete_contact'),
     path('contact/<int:id>/edit/', edit_contact, name='edit_contact'),
-    
-
-
 ]
 
 
