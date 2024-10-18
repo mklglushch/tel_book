@@ -14,7 +14,7 @@ def home_page(request):
 #list contacts
 def show_phone_book(request):
     phones = Contact.objects.all()
-    return render(request, 'phone_numbers/phone book.html', {'phones': phones})
+    return render(request, 'contacts/phone_book.html', {'phones': phones})
 
 
 def login(request):
