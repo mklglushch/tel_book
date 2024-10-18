@@ -1,25 +1,23 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import redirect, render, get_object_or_404
-from .models import Telephone_book
+from .models import Contact
 from django.contrib.auth import authenticate, login as auth_login, logout as user_logout
 from django.contrib.auth.models import User
 from .forms import ContactForm
 from django.contrib import messages
 
 
-#home page
 def home_page(request):
-    return render(request, 'phone_numbers/home page.html')
+    return render(request, 'contacts/home_page.html')
 
 
 #list contacts
 def show_phone_book(request):
-    phones = Telephone_book.objects.all()
-    return render(request, 'phone_numbers/phone book.html', {'phones': phones})
+    phones = Contact.objects.all()
+    return render(request, 'contacts/phone_book.html', {'phones': phones})
 
 
-#login
-def login_view(request):
+def login(request):
     if request.method == 'POST':
         login = request.POST.get('login')
         password = request.POST.get('password')
@@ -33,8 +31,7 @@ def login_view(request):
     return render(request, 'auth/login.html')
 
 
-#register
-def reg_view(request):
+def register(request):
     if request.method == 'POST':
         login = request.POST.get('login')
         password = request.POST.get('password')
@@ -50,7 +47,7 @@ def reg_view(request):
             user = User.objects.create_user(username=login, password=password)
             auth_login(request, user)
             return redirect('/phone_book/')
-    return render(request, 'auth/reg.html')
+    return render(request, 'auth/register.html')
 
 
 #logout
@@ -59,25 +56,15 @@ def logout(reguest):
     return HttpResponseRedirect("/")
 
 
-#add contacts
-def add_contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect(show_phone_book)  
-    else:
-        form = ContactForm()
-    return render(request, 'add_contact.html', {'form': form})
 
 
 #list contacts for edit
 def edit_contact(request, id):
     try:
         if request.user.is_superuser:
-            contact = get_object_or_404(Telephone_book, id=id)
+            contact = get_object_or_404(Contact, id=id)
         else:
-            contact = get_object_or_404(Telephone_book, id=id, user=request.user)
+            contact = get_object_or_404(Contact, id=id, user=request.user)
     except:
         messages.error(request, "Ви не можете редагувати цей контакт, оскільки він вам не належить.")
         return redirect(show_phone_book)
@@ -97,7 +84,7 @@ def edit_contact(request, id):
 def delete_contact(request, id):
     if not request.user.is_superuser:
         return redirect(show_phone_book)
-    contact = get_object_or_404(Telephone_book, id=id)
+    contact = get_object_or_404(Contact, id=id)
     if request.method == 'POST':
         contact.delete()
         return redirect(show_phone_book)
