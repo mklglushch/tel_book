@@ -5,4 +5,4 @@ tel_book this project is an online phone book with the ability to store data abo
 install django open console write cd .\my_site
 write python .\manage.py runserver
 
-[перейти на головну сторінку](home_page.html)
+[перейти на головну сторінку](templates/home_page.html)
