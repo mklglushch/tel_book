@@ -3,43 +3,34 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="{%static 'css/auth/login.css'%}" >
+    <link rel="stylesheet" href="{%static 'css/auth/login.css'%}" />
     <title>login</title>
   </head>
   <body>
-    
-    <div class = 'container'>
-        
-        <div class="filter"></div>
+    <div class="container">
+      <div class="filter"></div>
 
+      <div class="form-container">
+        <form method="POST">
+          {%csrf_token%}
 
-        <div class="form-container">
-            <form method="POST">
-              {%csrf_token%}
+          <div class="input-block">
+            <label for="login">login</label>
+            <input id="login" type="text" name="login" />
+          </div>
 
-                <div class="input-block">
-                    <label for="login">login</label>
-                    <input id="login" type="text" name="login">
-                </div>
+          <div class="input-block">
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" />
+          </div>
+          
+          <div class="button-block">
+            <button>Sign in</button>
+          </div>
+        </form>
+      </div>
 
-                <div class="input-block">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" name="password">
-                </div>
-
-                <div class="button-block">
-                  <button>Sign in</button>
-                </div> 
-
-                
-
-            </form>
-        </div>   
-       
-
-        <div class="filter"></div>
-
+      <div class="filter"></div>
     </div>
-
   </body>
 </html>

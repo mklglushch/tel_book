@@ -2,7 +2,9 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from tel_book.views import *
+from tel_book.views.contact_views import *
+from tel_book.views.auth_views import *
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
