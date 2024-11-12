@@ -3,59 +3,60 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="{%static 'css/auth/login.css'%}" >
+    <link rel="stylesheet" href="{% static 'css/auth/register.css' %}" />
     <title>Register</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
   </head>
   <body>
-    
-      
     {% if messages %}
-    <ul class="messages">
       {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      <p{% if message.tags %} class="alert alert-{{ message.tags }} alert-dismissible fade show"{% endif %}>
+        {{ message }}
+      </p>
       {% endfor %}
     </ul>
     {% endif %}
 
-
-    <div class = 'container'>
-        
-        <div class="filter"></div>
-
-
-        <div class="form-container">
-            <form method="POST">
-              {%csrf_token%}
-
-                <div class="input-block">
-                    <label for="login">login</label>
-                    <input id="login" type="text" name="login">
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-center">Реєстрація</h3>
+            </div>
+            <div class="card-body">
+              <form method="POST">
+                {% csrf_token %}
+                <div class="mb-3">
+                  <label for="login" class="form-label">Логін</label>
+                  <input type="text" class="form-control" id="login" name="login" required>
                 </div>
-
-                <div class="input-block">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" name="password">
+                <div class="mb-3">
+                  <label for="password" class="form-label">Пароль</label>
+                  <input type="password" class="form-control" id="password" name="password" required>
                 </div>
-
-                <div class="input-block">
-                    <label for="password">Password</label>
-                    <input id="password" type="password" name="password2">
+                <div class="mb-3">
+                  <label for="password2" class="form-label">Повторіть пароль</label>
+                  <input type="password" class="form-control" id="password2" name="password2" required>
                 </div>
-
-
-                <div class="button-block">
-                  <button>Режстрація</button>
-                </div> 
-
-                
-
-            </form>
-        </div>   
-       
-
-        <div class="filter"></div>
-
+                <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">Реєстрація</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Підключення Bootstrap JS та залежності -->
 
   </body>
 </html>

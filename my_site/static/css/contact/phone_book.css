@@ -1,0 +1,146 @@
+/* Основний стиль сторінки */
+body {
+  background-color: #f4f7fa;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+h1 {
+  text-align: center;
+  color: #007bff;
+  font-size: 2em;
+  font-weight: bold;
+  margin-top: 20px;
+}
+
+/* Стиль контейнера */
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Пошукове поле */
+#myInput {
+  width: 100%;
+  padding: 10px;
+  margin: 15px 0;
+  border: 1px solid #ced4da;
+  border-radius: 5px;
+  font-size: 16px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Таблиця */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #ffffff;
+  margin-top: 20px;
+}
+
+table th, table td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid #dee2e6;
+}
+
+table th {
+  background-color: #343a40;
+  color: #ffffff;
+  font-weight: bold;
+  text-transform: uppercase;
+  
+}
+
+table tr:hover {
+  background-color: #f1f1f1;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Кнопки */
+.button-logout a button, .btn, .button-block button {
+  font-size: 16px;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin-top: 15px;
+  width: 50x;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+}
+
+.button-logout a button {
+  background-color: #dc3545;
+  color: #ffffff;
+  margin: 10px;
+}
+
+.button-logout a button:hover {
+  background-color: #bd2130;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #ffffff;
+  margin-right: 10px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+  color: #ffffff;
+}
+
+.btn-danger:hover {
+  background-color: #bd2130;
+}
+
+.btn-success {
+  background-color: #28a745;
+  color: #ffffff;
+  margin: 20px 0;
+  display: block;
+  width: fit-content;
+}
+
+.btn-success:hover {
+  background-color: #218838;
+}
+
+/* Повідомлення */
+ul.messages {
+  list-style: none;
+  padding: 0;
+  margin-top: 20px;
+}
+
+ul.messages li {
+  margin-bottom: 10px;
+  padding: 15px;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+ul.messages .alert-success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+ul.messages .alert-danger {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}

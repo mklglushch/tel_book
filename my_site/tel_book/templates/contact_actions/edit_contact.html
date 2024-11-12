@@ -1,0 +1,100 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="uk">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Редагувати контакт</title>
+    <!-- Підключення Bootstrap CSS -->
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Підключення файлу зі стилями -->
+    <link rel="stylesheet" href="{% static 'css/contact/edit_contact.css' %}" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2 class="mb-4 text-center">Редагувати контакт</h2>
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="id_name">Ім'я:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="name"
+            value="{{ form.name.value|default_if_none:'' }}"
+            maxlength="255"
+            required
+            id="id_name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="id_surname">Прізвище:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="surname"
+            value="{{ form.surname.value|default_if_none:'' }}"
+            maxlength="255"
+            required
+            id="id_surname"
+          />
+        </div>
+        <div class="form-group">
+          <label for="id_father_name">По батькові:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="father_name"
+            value="{{ form.father_name.value|default_if_none:'' }}"
+            maxlength="255"
+            required
+            id="id_father_name"
+          />
+        </div>
+        <div class="form-group">
+          <label for="id_type_contact">Тип контакту:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="type_contact"
+            value="{{ form.type_contact.value|default_if_none:'' }}"
+            maxlength="255"
+            required
+            id="id_type_contact"
+          />
+        </div>
+        <div class="form-group">
+          <label for="id_phone">Телефон:</label>
+          <input
+            type="tel"
+            class="form-control"
+            name="phone"
+            value="{{ form.phone.value|default_if_none:'' }}"
+            maxlength="12"
+            required
+            id="id_phone"
+          />
+        </div>
+        <div class="form-group">
+          <label for="id_email">Електронна пошта:</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            value="{{ form.email.value|default_if_none:'' }}"
+            maxlength="255"
+            id="id_email"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Зберегти</button>
+      </form>
+    </div>
+    <!-- Підключення Bootstrap JS та залежності -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

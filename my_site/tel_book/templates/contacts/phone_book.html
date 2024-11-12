@@ -1,123 +1,180 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <title>Телефонна книга</title>
-        <link rel="stylesheet" href="{%static 'css/phone book.css'%}" >
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQX6e5cCf6LZMmFFEqn7ERc8skHct7fcLgJm43OSsIdJENhaZ9h9cL+2w" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-Ca3U+B/MfhKrmG+ofZ7i5W2tdgfBD+Xwp1bIS6ci9A9+EeypYcbFU+qPGAyPaBEm" crossorigin="anonymous"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Телефонна книга</title>
 
-    </head>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/contact/phone_book.css' %}" />
 
-<!--таблиця телефонної книги-->
-<p>
-    Телефонна книга
-</p>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
+  </head>
 
-{% comment %} logout {% endcomment %}
-<div class="button-logout">
-    <a href="/">
-        <button>logout</button>
-    </a>
-</div> 
+  <body class="bg-light">
+    <div class="container my-5">
+      <h1 class="text-center mb-4">Телефонна книга</h1>
 
+      <!-- Logout Button -->
+      <div class="button-container">
+        <div class="button-logout">
+          <a href="/"><button>Вихід</button></a>
+        </div>
+      </div>
 
-<body>
-{% comment %} Пошук(фільтрація) по таблиці {% endcomment %}
-<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Поиск имен..">
+      <!-- Search Input -->
+      <div class="input-group mb-3">
+        <input
+          type="text"
+          id="myInput"
+          onkeyup="myFunction()"
+          class="form-control"
+          placeholder="Пошук імен..."
+        />
+      </div>
 
-
-
-
-{% comment %} таблиця телефонних номерів{% endcomment %}
-    <table id="myTable">
-        <thead>
-            <tr>
-                <th data-type= "string">Прізвище</th>
-                <th data-type= "string">Імя</th>
-                <th data-type= "string">По-батькові</th>
-                <th data-type= "string">Тип контакту</th>
-                <th data-type= "number">Номер телефону</th>
-                <th data-type= "string">Електронна адреса</th>
-            </tr>
+      <!-- Contacts Table -->
+      <table id="myTable" class="table table-striped table-hover">
+        <thead class="table-dark">
+          <tr>
+            <th data-type="string">Прізвище</th>
+            <th data-type="string">Ім'я</th>
+            <th data-type="string">По-батькові</th>
+            <th data-type="string">Тип контакту</th>
+            <th data-type="number">Номер телефону</th>
+            <th data-type="string">Електронна адреса</th>
+            <th>Дії</th>
+          </tr>
         </thead>
         <tbody>
-            {% for p in phones %}
-            <tr class="header">
-                <td>{{p.surname}}</td>
-                <td>{{p.name}}</td>
-                <td>{{p.father_name}}</td>
-                <td>{{p.type_contact}}</td> 
-                <td>{{p.phone}}</td>
-                <td>{{p.email}}</td>
-                <td>
-                <a href="{% url 'edit_contact' p.id %}">Редагувати</a>
-                <form action="{% url 'delete_contact' p.id %}" method="post">
-                    {% csrf_token %}
-                    <button type="submit">Видалити</button>
-
-                </td>
-            </tr>
-            {% endfor %}
-            <a href="{% url 'add_contact' %}" class="btn">Додати новий контакт</a>
+          {% for p in phones %}
+          <tr>
+            <td>{{ p.surname }}</td>
+            <td>{{ p.name }}</td>
+            <td>{{ p.father_name }}</td>
+            <td>{{ p.type_contact }}</td>
+            <td>{{ p.phone }}</td>
+            <td>{{ p.email }}</td>
+            <td>
+              <a
+                href="{% url 'edit_contact' p.id %}"
+                class="btn btn-sm btn-primary"
+                >Редагувати</a
+              >
+              <form
+                action="{% url 'delete_contact' p.id %}"
+                method="post"
+                style="display: inline"
+              >
+                {% csrf_token %}
+                <button type="submit" class="btn btn-sm btn-danger">
+                  Видалити
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
         </tbody>
-    </table>
+      </table>
 
+      <!-- Add Contact Button -->
+      <div class="text-end mt-3">
+        <a href="{% url 'add_contact' %}" class="btn btn-success"
+          >Додати новий контакт</a
+        >
+      </div>
 
-{% if messages %}
-    <ul class="messages">
+      <!-- Messages -->
+      {% if messages %}
+      <ul class="messages mt-4">
         {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        <li
+          class="alert alert-{{ message.tags }} alert-dismissible fade show"
+          role="alert"
+        >
+          {{ message }}
+        </li>
         {% endfor %}
-    </ul>
-{% endif %}
+      </ul>
+      {% endif %}
+    </div>
 
+    <!-- Sorting Script -->
+    <script>
+      document.getElementById("myTable").onclick = function (e) {
+        if (e.target.tagName !== "TH") return;
 
-
-{% comment %} Сортування в електронній книзі {% endcomment %}
-<script>
-    myTable.onclick = function(e) {
-        if (e.target.tagName !== 'TH') return;
-    
         let th = e.target;
         let colNum = th.cellIndex;
         let type = th.dataset.type;
-        let tbody = myTable.querySelector('tbody');
+        let tbody = document.getElementById("myTable").querySelector("tbody");
         let rowsArray = Array.from(tbody.rows);
-    
-        let compare = type === 'number'
-            ? (rowA, rowB) => rowA.cells[colNum].innerText - rowB.cells[colNum].innerText
-            : (rowA, rowB) => rowA.cells[colNum].innerText.localeCompare(rowB.cells[colNum].innerText);
-    
+
+        let compare =
+          type === "number"
+            ? (rowA, rowB) =>
+                rowA.cells[colNum].innerText - rowB.cells[colNum].innerText
+            : (rowA, rowB) =>
+                rowA.cells[colNum].innerText.localeCompare(
+                  rowB.cells[colNum].innerText
+                );
+
         rowsArray.sort(compare);
         tbody.append(...rowsArray);
-    }
-</script>
+      };
+    </script>
 
-
-{% comment %} Пошук в телефонній книзі {% endcomment %}
-
-
-<script>
-    function myFunction() {
+    <!-- Search Script -->
+    <script>
+      function myFunction() {
         var filter = document.getElementById("myInput").value.toUpperCase();
-        var rows = document.querySelectorAll("#myTable tr");
-      
-        rows.forEach(row => {
-          var cell = row.querySelector("td");
-          row.style.display = cell && cell.textContent.toUpperCase().includes(filter) ? "" : "none";
+        var rows = document.querySelectorAll("#myTable tbody tr");
+
+        rows.forEach((row) => {
+          var cellText = Array.from(row.cells)
+            .map((cell) => cell.textContent || cell.innerText)
+            .join(" ");
+          row.style.display = cellText.toUpperCase().includes(filter)
+            ? ""
+            : "none";
         });
       }
-</script>
+    </script>
 
+    <!-- Auto Close Message Script -->
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          var alertList = document.querySelectorAll(".alert");
+          alertList.forEach(function (alert) {
+            var bsAlert = new bootstrap.Alert(alert);
+            bsAlert.close();
+          });
+        }, 5000); // 5000 мілісекунд = 5 секунд
+      });
+    </script>
 
-
-
-</body>
-
-
-
-
-</html> 
-
+    <!-- Підключення Bootstrap JS та залежності -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js"
+      integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.js"
+      integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

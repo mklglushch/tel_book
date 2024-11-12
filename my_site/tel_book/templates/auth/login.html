@@ -3,29 +3,33 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="{%static 'css/auth/login.css'%}" />
-    <title>login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    {% comment %} <link rel="stylesheet" href="{% static 'css/auth/login.css' %}" /> {% endcomment %}
+    
+    <title>Login</title>
   </head>
   <body>
-    <div class="container">
+    <div class="container d-flex justify-content-center align-items-center vh-100">
       <div class="filter"></div>
 
-      <div class="form-container">
+      <div class="form-container p-4 bg-light rounded shadow">
         <form method="POST">
-          {%csrf_token%}
+          {% csrf_token %}
 
-          <div class="input-block">
-            <label for="login">login</label>
-            <input id="login" type="text" name="login" />
+          <div class="form-group">
+            <label for="login">Login</label>
+            <input id="login" type="text" name="login" class="form-control" />
           </div>
 
-          <div class="input-block">
+          <div class="form-group">
             <label for="password">Password</label>
-            <input id="password" type="password" name="password" />
+            <input id="password" type="password" name="password" class="form-control" />
           </div>
           
-          <div class="button-block">
-            <button>Sign in</button>
+          <div class="form-group text-center">
+            <button class="btn btn-primary btn-block">Sign in</button>
           </div>
         </form>
       </div>

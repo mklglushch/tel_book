@@ -34,18 +34,23 @@ def edit_contact(request, id):
             return redirect(show_phone_book) 
     else:
         form = ContactForm(instance=contact)
-    return render(request, 'edit_contact.html', {'form': form})
+    return render(request, 'contact_actions/edit_contact.html', {'form': form})
 
 
 # delete contact
 def delete_contact(request, id):
     if not request.user.is_superuser:
+        messages.error(request, "Контакти може видаляти лише адміністратор")
         return redirect(show_phone_book)
     contact = get_object_or_404(Contact, id=id)
     if request.method == 'POST':
         contact.delete()
+        messages.success(request, "Контакт успішно видалено.")
         return redirect(show_phone_book)
-    return render(request, 'confirm_delete.html', {'contact': contact})
+    contact.delete()
+    messages.success(request, "Контакт успішно видалено.")
+    return redirect(show_phone_book)
+
 
 
 # add contact
@@ -60,4 +65,4 @@ def add_contact(request):
             return redirect(show_phone_book)
     else:
         form = ContactForm()
-    return render(request, 'add_contact.html', {'form': form})
+    return render(request, 'contact_actions/add_contact.html', {'form': form})
