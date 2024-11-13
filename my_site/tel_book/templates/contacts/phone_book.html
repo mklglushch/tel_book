@@ -5,10 +5,8 @@
     <meta charset="UTF-8" />
     <title>Телефонна книга</title>
 
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="{% static 'css/contact/phone_book.css' %}" />
 
-    <!-- Bootstrap CSS -->
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
@@ -18,17 +16,17 @@
   </head>
 
   <body class="bg-light">
-    <div class="container my-5">
-      <h1 class="text-center mb-4">Телефонна книга</h1>
+    <div class="container my-5 position-relative">
+      <div class="d-flex justify-content-between align-items-center">
+        <h1 class="text-center mb-4">Телефонна книга</h1>
 
-      <!-- Logout Button -->
-      <div class="button-container">
+        {% comment %} Logout Button {% endcomment %}
         <div class="button-logout">
-          <a href="/"><button>Вихід</button></a>
+          <a href="/"><button class="logout-button">Вихід</button></a>
         </div>
       </div>
 
-      <!-- Search Input -->
+      {% comment %} Search Input {% endcomment %}
       <div class="input-group mb-3">
         <input
           type="text"
@@ -39,7 +37,7 @@
         />
       </div>
 
-      <!-- Contacts Table -->
+      {% comment %} Contacts Table {% endcomment %}
       <table id="myTable" class="table table-striped table-hover">
         <thead class="table-dark">
           <tr>
@@ -83,14 +81,14 @@
         </tbody>
       </table>
 
-      <!-- Add Contact Button -->
+      {% comment %} Add Contact Button {% endcomment %}
       <div class="text-end mt-3">
         <a href="{% url 'add_contact' %}" class="btn btn-success"
           >Додати новий контакт</a
         >
       </div>
 
-      <!-- Messages -->
+      {% comment %} Messages {% endcomment %}
       {% if messages %}
       <ul class="messages mt-4">
         {% for message in messages %}
@@ -105,7 +103,7 @@
       {% endif %}
     </div>
 
-    <!-- Sorting Script -->
+    {% comment %} Sorting Script {% endcomment %}
     <script>
       document.getElementById("myTable").onclick = function (e) {
         if (e.target.tagName !== "TH") return;
@@ -130,7 +128,7 @@
       };
     </script>
 
-    <!-- Search Script -->
+    {% comment %}Search Script{% endcomment %}
     <script>
       function myFunction() {
         var filter = document.getElementById("myInput").value.toUpperCase();
@@ -147,7 +145,7 @@
       }
     </script>
 
-    <!-- Auto Close Message Script -->
+    {% comment %} Auto Close Message Script {% endcomment %}
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
@@ -156,11 +154,10 @@
             var bsAlert = new bootstrap.Alert(alert);
             bsAlert.close();
           });
-        }, 5000); // 5000 мілісекунд = 5 секунд
+        }, 5000);
       });
     </script>
 
-    <!-- Підключення Bootstrap JS та залежності -->
     <script
       src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
       integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"

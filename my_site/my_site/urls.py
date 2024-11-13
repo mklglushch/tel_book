@@ -4,7 +4,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from tel_book.views.contact_views import *
 from tel_book.views.auth_views import *
-
+from tel_book.views.import_views import import_csv
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -16,9 +16,8 @@ urlpatterns = [
     path('add/', add_contact, name='add_contact'),
     path('delete_contact/<int:id>/', delete_contact, name='delete_contact'),
     path('contact/<int:id>/edit/', edit_contact, name='edit_contact'),
+    path('import-csv/', import_csv, name='import_csv'),
 ]
-
-
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
