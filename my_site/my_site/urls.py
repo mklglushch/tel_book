@@ -9,7 +9,7 @@ from tel_book.views.import_views import import_csv
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home_page),
-    path('phone_book/', show_phone_book),
+    path('phone_book/', show_phone_book, name="phone_book"),
     path('login/', login, name='register'),
     path('reg/', register, name='register'),
     path('logout/', logout),

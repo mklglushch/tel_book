@@ -1,5 +1,6 @@
 import csv
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib import messages
 from ..forms import CSVUploadForm
 from ..models import Contact
 
@@ -21,12 +22,12 @@ def import_csv(request):
                         email=row['email'],
                         user=request.user 
                     )
-                return render(request, 'import/import_success.html')
+                messages.success(request, 'CSV файл успішно імпортовано.')
+                return redirect('phone_book')  # Перенаправлення на сторінку phone_book
             except Exception as e:
-                print('Error while processing CSV:', e)  
+                messages.error(request, f'Помилка при обробці CSV файлу: {e}')
         else:
-            print('Form is not valid')
+            messages.error(request, 'Форма не є валідною.')
     else:
-        print('Request method is not POST') 
         form = CSVUploadForm()
     return render(request, 'import/import_csv.html', {'form': form})
