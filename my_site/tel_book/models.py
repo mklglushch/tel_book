@@ -2,8 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Contact(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)  # Залишаємо тільки це поле
     title = models.CharField(max_length=200)
     surname = models.CharField(max_length=255)
     name = models.CharField(max_length=255)
@@ -11,17 +12,8 @@ class Contact(models.Model):
     type_contact = models.CharField(max_length=255)
     phone = models.TextField(max_length=12)
     email = models.TextField(max_length=255, blank=True)
-    is_private = models.BooleanField(default=False)
 
 
     def __str__(self):
         return self.title
 
-
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=20)
-    address = models.CharField(max_length=255)
-
-    def __str__(self):
-        return self.user.username
