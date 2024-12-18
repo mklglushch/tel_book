@@ -5,10 +5,6 @@ from django import forms
 
 
 
-class CSVUploadForm(forms.Form):
-    file = forms.FileField()
-
-
 class LoginForm(AuthenticationForm):
     username = forms.CharField(label='Логін', max_length=254)
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput)

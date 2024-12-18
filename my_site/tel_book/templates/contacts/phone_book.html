@@ -13,14 +13,10 @@
 </head>
 
 <body class="bg-light">
+    {% include 'navigate/header.html' %}
     <div class="container my-5 position-relative">
         <div class="d-flex justify-content-between align-items-center">
             <h1 class="text-center mb-4">Телефонна книга</h1>
-
-            <!-- Logout Button -->
-            <div class="button-logout">
-                <a href="/"><button class="logout-button">Вихід</button></a>
-            </div>
         </div>
 
         <!-- Search Input -->
@@ -32,12 +28,12 @@
         <table id="myTable" class="table table-striped table-hover">
             <thead class="table-dark">
                 <tr>
-                    <th data-type="string">Прізвище</th>
-                    <th data-type="string">Ім'я</th>
-                    <th data-type="string">По-батькові</th>
-                    <th data-type="string">Тип контакту</th>
-                    <th data-type="number">Номер телефону</th>
-                    <th data-type="string">Електронна адреса</th>
+                    <th data-type="string">Прізвище <span class="arrow"></span></th>
+                    <th data-type="string">Ім'я <span class="arrow"></span></th>
+                    <th data-type="string">По-батькові <span class="arrow"></span></th>
+                    <th data-type="string">Тип контакту <span class="arrow"></span></th>
+                    <th data-type="number">Номер телефону <span class="arrow"></span></th>
+                    <th data-type="string">Електронна адреса <span class="arrow"></span></th>
                     <th>Дії</th>
                 </tr>
             </thead>
@@ -63,12 +59,18 @@
         </table>
 
         <!-- Add Contact Button -->
-        <div class="text-end mt-3">
+         <div class="button_container">
             <a href="{% url 'add_contact' %}" class="btn btn-success">Додати новий контакт</a>
-            <a href="{% url 'import_csv' %}" class="btn btn-success">Імпортувати контакти з csv</a>
-
+            <form id="uploadForm" action="{% url 'upload_csv' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <!-- Невидиме поле для вибору файлів -->
+                <input type="file" id="file" name="file" accept=".csv, .xls, .xlsx" style="display:none;" />
+                
+                <!-- Кнопка для вибору файлів -->
+                <button type="button" class="btn btn-primary" id="uploadButton">Імпорт контактів з csv/xls</button>
+            </form>
         </div>
-
         <!-- Messages -->
         {% if messages %}
         <ul class="messages mt-4">
@@ -80,7 +82,19 @@
         </ul>
         {% endif %}
 
+    <script>
+        // Відкриття діалогового вікна для вибору файлів
+        document.getElementById('uploadButton').addEventListener('click', function() {
+            document.getElementById('file').click();  // Симулюємо клік на невидиме поле для файлів
+        });
 
+        // Автоматичне відправлення форми після вибору файлу
+        document.getElementById('file').addEventListener('change', function() {
+            if (this.files.length > 0) {  // Перевіряємо, чи вибрано хоча б один файл
+                document.getElementById('uploadForm').submit();  // Автоматична відправка форми
+            }
+        });
+    </script>
     <!-- Sorting Script -->
     <script>
       document.getElementById("myTable").onclick = function (e) {
@@ -89,20 +103,36 @@
         let th = e.target;
         let colNum = th.cellIndex;
         let type = th.dataset.type;
+        if (!type) return;
+
         let tbody = document.getElementById("myTable").querySelector("tbody");
         let rowsArray = Array.from(tbody.rows);
+
+        let isAscending = th.dataset.order === "asc";
+        th.dataset.order = isAscending ? "desc" : "asc";
+
+        let getCellValue = (row, col) => row.cells[col]?.innerText || "";
 
         let compare =
             type === "number"
             ? (rowA, rowB) =>
-                rowA.cells[colNum].innerText - rowB.cells[colNum].innerText
+                getCellValue(rowA, colNum) - getCellValue(rowB, colNum)
             : (rowA, rowB) =>
-                rowA.cells[colNum].innerText.localeCompare(rowB.cells[colNum].innerText);
+                getCellValue(rowA, colNum).toLowerCase()
+                .localeCompare(getCellValue(rowB, colNum).toLowerCase());
 
-        rowsArray.sort(compare);
+        rowsArray.sort((rowA, rowB) => {
+            let res = compare(rowA, rowB);
+            return isAscending ? res : -res;
+        });
+
+        document.querySelectorAll("th").forEach(th => th.classList.remove("active"));
+        th.classList.add("active");
+
         tbody.append(...rowsArray);
-      };
+        };
 
+// search
       function myFunction() {
         var filter = document.getElementById("myInput").value.toUpperCase();
         var rows = document.querySelectorAll("#myTable tbody tr");
@@ -115,6 +145,7 @@
         });
       }
 
+    //   time for messages
       document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
           var alertList = document.querySelectorAll(".alert");
@@ -134,4 +165,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 
 </body>
+<footer>
+    {% include 'navigate/footer.html' %}    
+</footer>
 </html>
