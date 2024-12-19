@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from ..models import Contact
 import openpyxl
-import xlrd
+import pandas as pd
+
 
 
 
@@ -56,30 +57,28 @@ def upload_xlsx(file, request):
         return HttpResponse(f'Помилка при обробці файлу: {e}', status=500)
     
 
+
 def upload_xls(file, request):
     try:
-        workbook = xlrd.open_workbook(file_contents=file.read())
-        sheet = workbook.sheet_by_index(0)
+        # Читаємо файл формату .xls
+        data = pd.read_excel(file, engine='xlrd')
 
-        for row_idx in range(1, sheet.nrows):
-            row = sheet.row(row_idx)
+        # Ітеруємося по рядках і створюємо об'єкти Contact
+        for _, row in data.iterrows():
             Contact.objects.create(
-                name=row[0].value,           
-                surname=row[1].value,        
-                father_name=row[2].value,    
-                type_contact=row[3].value,   
-                phone=row[4].value,          
-                email=row[5].value,
+                name=row['name'],
+                surname=row['surname'],
+                father_name=row['father_name'],
+                type_contact=row['type_contact'],
+                phone=row['phone'],
+                email=row['email'],
                 user=request.user
             )
         
         return redirect('phone_book')  # Перенаправлення на сторінку зі списком контактів
     except Exception as e:
-        # Загальна обробка помилок
         print(f'Неочікувана помилка: {e}')
         return HttpResponse(f'Помилка при обробці файлу: {e}', status=500)
-
-
 
 def upload_file(request):
     if request.method == 'POST' and request.FILES['file']:

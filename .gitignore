@@ -1,2 +1,7 @@
 my_site\tel_book\__pycache__
 staticfiles/
+my_site/db.sqlite3
+.vscode/settings.json
+.github/workflows/deploy.ml
+my_site/db.sqlite3
+.github/workflows/deploy.ml

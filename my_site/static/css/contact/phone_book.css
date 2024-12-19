@@ -24,11 +24,14 @@ h1 {
 }
 .container.my-5.position-relative{
   margin-top: 20px !important;
+  overflow-x: auto;
+
 }
 
 
 /* Пошукове поле */
 #myInput {
+  min-width: 920px;
   width: 100%;
   padding: 10px;
   margin: 15px 0;
