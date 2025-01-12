@@ -1,8 +1,7 @@
-my_site\tel_book\__pycache__
+
+.vscode/settings.json
 staticfiles/
 my_site/db.sqlite3
 .vscode/settings.json
 .github/workflows/deploy.ml
-my_site/db.sqlite3
-.github/workflows/deploy.ml
-my_site\tel_book\views\__pycache__
+/my_site/tel_book/views/__pycache__
