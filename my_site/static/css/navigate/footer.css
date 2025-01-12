@@ -2,22 +2,22 @@ footer {
   bottom: 0px;
   display: flex;
   max-width: 100%;
-  position: fixed; /* Закріплює футер внизу */
-  background-color: #f8f9fa; /* Світлий колір фону, як для Bootstrap */
+  position: fixed; 
+  background-color: #f8f9fa; 
   margin: 0px;
   left: 1%;
   right: 2%;
-  justify-content: space-between; /* Елементи на обох краях */
+  justify-content: space-between; 
 }
 
 ul {
-  list-style: none; /* Забирає стандартні маркери списку */
+  list-style: none; 
   padding: 0;
   margin: 0;
 }
 li {
-  display: inline; /* Робить елементи списку горизонтальними */
-  margin-right: 10px; /* Додає відступи між елементами */
+  display: inline; 
+  margin-right: 10px; 
 }
 .footer-links a {
   text-decoration: none;

@@ -13,7 +13,6 @@ def upload_csv(file, request):
         file_data = file.read().decode('utf-8').splitlines()
         csv_reader = csv.DictReader(file_data)
 
-        # Перевірка зчитаних даних з CSV
         for row in csv_reader:
             try:
                 Contact.objects.create(
@@ -57,13 +56,10 @@ def upload_xlsx(file, request):
         return HttpResponse(f'Помилка при обробці файлу: {e}', status=500)
     
 
-
 def upload_xls(file, request):
     try:
-        # Читаємо файл формату .xls
         data = pd.read_excel(file, engine='xlrd')
 
-        # Ітеруємося по рядках і створюємо об'єкти Contact
         for _, row in data.iterrows():
             Contact.objects.create(
                 name=row['name'],
@@ -75,7 +71,7 @@ def upload_xls(file, request):
                 user=request.user
             )
         
-        return redirect('phone_book')  # Перенаправлення на сторінку зі списком контактів
+        return redirect('phone_book') 
     except Exception as e:
         print(f'Неочікувана помилка: {e}')
         return HttpResponse(f'Помилка при обробці файлу: {e}', status=500)
@@ -95,4 +91,4 @@ def upload_file(request):
         
         return redirect('phone_book')
 
-    return render(request, 'upload.html')  # Шаблон для завантаження файлу
+    return render(request, 'upload.html')  

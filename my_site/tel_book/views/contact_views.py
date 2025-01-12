@@ -4,17 +4,17 @@ from ..forms import ContactForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 
-# Домашня сторінка
+
 def home_page(request):
     return render(request, 'contacts/home_page.html')
 
-# Список контактів 
+
 @login_required
 def show_phone_book(request):
     phones = Contact.objects.all()
     return render(request, 'contacts/phone_book.html', {'phones': phones})
 
-# Редагування контактів
+
 @login_required
 def edit_contact(request, id):
     try:
@@ -36,7 +36,7 @@ def edit_contact(request, id):
         form = ContactForm(instance=contact)
     return render(request, 'contact_actions/edit_contact.html', {'form': form})
 
-# Видалення контакту
+
 @login_required
 def delete_contact(request, id):
     if not request.user.is_superuser:
@@ -50,7 +50,7 @@ def delete_contact(request, id):
     messages.success(request, "Контакт успішно видалено.")
     return redirect(show_phone_book)
 
-# Додавання нового контакту
+
 @login_required
 def add_contact(request):
     if request.method == 'POST':

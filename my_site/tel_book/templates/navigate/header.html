@@ -4,17 +4,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="{% static 'css/navigate/header.css' %}" />
     <title></title>
   </head>
   <body>
-    <header>
       <div class="header-nav">
         <label class="username_info">{{ user.username }}</label>
         <a href="{% url 'logout' %}">
           <button class="btn btn-danger">Вихід</button>
         </a>
       </div>
-    </header>
   </body>
 </html>
