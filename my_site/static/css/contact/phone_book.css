@@ -1,4 +1,3 @@
-/* Основний стиль сторінки */
 body {
   background-color: #f4f7fa;
   font-family: Arial, sans-serif;
@@ -13,18 +12,23 @@ h1 {
   margin-top: 20px;
 }
 
-/* Стиль контейнера */
 .container {
-  max-width: 1400px;
+  max-width: 1400 px;
   margin: 0 auto;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 8px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
 }
+.container.my-5.position-relative{
+  margin-top: 20px !important;
+  overflow-x: auto;
 
-/* Пошукове поле */
+}
+
+
 #myInput {
+  min-width: 920px;
   width: 100%;
   padding: 10px;
   margin: 15px 0;
@@ -34,7 +38,7 @@ h1 {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Таблиця */
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -42,35 +46,74 @@ table {
   margin-top: 20px;
 }
 
+
 table th, table td {
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid #dee2e6;
 }
 
+
 table th {
+  padding: 15px;
+  user-select: none;
   background-color: #343a40;
   color: #ffffff;
   font-weight: bold;
   text-transform: uppercase;
+  cursor: pointer;
   
 }
+
+
+th{
+  min-width: 117px;
+}
+
+
+.arrow{
+  visibility: hidden;
+  font-size: 14px;
+}
+
+
+th.active[data-order="asc"] .arrow::before {
+  content: "▲";
+  color: #515a62;
+  visibility: visible;
+}
+
+
+th.active[data-order="desc"] .arrow::before {
+  content: "▼";
+  color: #515a62;
+  visibility: visible;
+
+}
+
 
 table tr:hover {
   background-color: #f1f1f1;
 }
 
+
 table tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-/* Кнопки */
+
+.button_container {
+  display: flex !important; 
+  gap: 10px !important; 
+  align-items: center !important;
+}
+
+
 .button-logout a button, .btn, .button-block button {
   font-size: 16px;
   font-weight: bold;
-  padding: 10px 20px;
-  margin-top: 15px;
-  width: 50x;
+  padding: initial !important;
+  width: 100px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
@@ -78,15 +121,18 @@ table tr:nth-child(even) {
   text-transform: uppercase;
 }
 
+
 .button-logout a button {
   background-color: #dc3545;
   color: #ffffff;
   margin: 10px;
 }
 
+
 .button-logout a button:hover {
   background-color: #bd2130;
 }
+
 
 .btn-primary {
   background-color: #007bff;
@@ -94,18 +140,22 @@ table tr:nth-child(even) {
   margin-right: 10px;
 }
 
+
 .btn-primary:hover {
   background-color: #0056b3;
 }
+
 
 .btn-danger {
   background-color: #dc3545;
   color: #ffffff;
 }
 
+
 .btn-danger:hover {
   background-color: #bd2130;
 }
+
 
 .btn-success {
   background-color: #28a745;
@@ -113,18 +163,32 @@ table tr:nth-child(even) {
   margin: 20px 0;
   display: block;
   width: fit-content;
+  padding: 5px !important;
 }
 
-.btn-success:hover {
+
+.btn-success:hover, #uploadButton:hover {
   background-color: #218838;
 }
 
-/* Повідомлення */
+
+#uploadButton{
+  background-color: #28a745;
+  color: #ffffff;
+  margin: 20px 0;
+  display: block;
+  width: fit-content;
+  padding: 5.8px !important;
+  border: none;
+}
+
+
 ul.messages {
   list-style: none;
   padding: 0;
   margin-top: 20px;
 }
+
 
 ul.messages li {
   margin-bottom: 10px;
@@ -133,14 +197,39 @@ ul.messages li {
   font-size: 16px;
 }
 
+
 ul.messages .alert-success {
   background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
 }
 
+
 ul.messages .alert-danger {
   background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
+}
+
+
+.header-nav {
+  background-color: transparent;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin: 0px 25px 0px 25px;
+  padding: 5px 10px;
+  height: auto;
+  box-sizing: border-box; 
+}
+
+.username_info {
+  margin: 5px;
+  font-size: large;
+  margin-right: 15px;
+}
+
+header {
+  padding: 5px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }

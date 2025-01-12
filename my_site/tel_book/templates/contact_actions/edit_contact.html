@@ -5,16 +5,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Редагувати контакт</title>
-    <!-- Підключення Bootstrap CSS -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Підключення файлу зі стилями -->
     <link rel="stylesheet" href="{% static 'css/contact/edit_contact.css' %}" />
   </head>
+  <header>
+    {% include 'navigate/header.html' %}    
+  </header>
   <body>
-    <div class="container mt-5">
+    <div class="container mt-5 ">
       <h2 class="mb-4 text-center">Редагувати контакт</h2>
       <form method="post">
         {% csrf_token %}
@@ -92,9 +93,11 @@
         <button type="submit" class="btn btn-primary mt-3">Зберегти</button>
       </form>
     </div>
-    <!-- Підключення Bootstrap JS та залежності -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   </body>
+  <footer>
+    {% include 'navigate/footer.html' %}    
+  </footer>
 </html>

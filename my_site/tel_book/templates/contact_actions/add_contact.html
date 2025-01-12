@@ -5,14 +5,15 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Додати новий контакт</title>
-    <!-- Підключення Bootstrap CSS -->
     <link
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <!-- Підключення файлу зі стилями -->
     <link rel="stylesheet" href="{% static 'css/contact/add_contact.css' %}" />
   </head>
+  <header>
+    {% include 'navigate/header.html' %}    
+  </header>
   <body>
     <div class="container mt-5">
       <h2 class="mb-4 text-center">Додати новий контакт</h2>
@@ -87,4 +88,7 @@
       </form>
     </div>
   </body>
+  <footer>
+    {% include 'navigate/footer.html' %}    
+  </footer>
 </html>

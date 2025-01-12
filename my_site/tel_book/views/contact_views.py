@@ -2,20 +2,20 @@ from django.shortcuts import redirect, render, get_object_or_404
 from ..models import Contact
 from ..forms import ContactForm
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 
 def home_page(request):
     return render(request, 'contacts/home_page.html')
 
 
-#list contacts
+@login_required
 def show_phone_book(request):
     phones = Contact.objects.all()
     return render(request, 'contacts/phone_book.html', {'phones': phones})
 
 
-
-#list contacts for edit
+@login_required
 def edit_contact(request, id):
     try:
         if request.user.is_superuser:
@@ -37,7 +37,7 @@ def edit_contact(request, id):
     return render(request, 'contact_actions/edit_contact.html', {'form': form})
 
 
-# delete contact
+@login_required
 def delete_contact(request, id):
     if not request.user.is_superuser:
         messages.error(request, "Контакти може видаляти лише адміністратор")
@@ -47,13 +47,11 @@ def delete_contact(request, id):
         contact.delete()
         messages.success(request, "Контакт успішно видалено.")
         return redirect(show_phone_book)
-    contact.delete()
     messages.success(request, "Контакт успішно видалено.")
     return redirect(show_phone_book)
 
 
-
-# add contact
+@login_required
 def add_contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -61,7 +59,7 @@ def add_contact(request):
             UserProfile = form.save(commit=False)
             UserProfile.user = request.user 
             UserProfile.save()
-            form.save()
+            messages.success(request, "Контакт успішно додано.")
             return redirect(show_phone_book)
     else:
         form = ContactForm()
