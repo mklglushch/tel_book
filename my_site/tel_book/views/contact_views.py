@@ -3,6 +3,8 @@ from ..models import Contact
 from ..forms import ContactForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+
 
 
 def home_page(request):
@@ -13,6 +15,23 @@ def home_page(request):
 def show_phone_book(request):
     phones = Contact.objects.all()
     return render(request, 'contacts/phone_book.html', {'phones': phones})
+
+
+def show_phone_book(request):
+    phone_list = Contact.objects.all() 
+
+    per_page = request.GET.get('per_page', 5)
+    per_page = int(per_page)
+
+    paginator = Paginator(phone_list, per_page)  
+
+    page_number = request.GET.get('page')  
+    phones = paginator.get_page(page_number)  
+
+    return render(request, 'contacts/phone_book.html', {
+        'phones': phones,
+        'per_page': per_page,  
+    })                   
 
 
 @login_required
