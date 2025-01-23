@@ -4,10 +4,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/navigate/header.css' %}" />
     <title></title>
   </head>
   <body>
-      <div class="header-nav">
+    <div class="header-nav">
+        <img src="{% static 'images/android-chrome-192x192.png' %}" alt="header_logo" class="header_logo">
         <label class="username_info">{{ user.username }}</label>
         <a href="{% url 'logout' %}">
           <button class="btn btn-danger">Вихід</button>

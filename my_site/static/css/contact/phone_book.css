@@ -212,24 +212,3 @@ ul.messages .alert-danger {
 }
 
 
-.header-nav {
-  background-color: transparent;
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin: 0px 25px 0px 25px;
-  padding: 5px 10px;
-  height: auto;
-  box-sizing: border-box; 
-}
-
-.username_info {
-  margin: 5px;
-  font-size: large;
-  margin-right: 15px;
-}
-
-header {
-  padding: 5px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
-}
