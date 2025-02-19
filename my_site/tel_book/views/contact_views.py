@@ -3,7 +3,7 @@ from ..models import Contact
 from ..forms import ContactForm
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.core.paginator import Paginator
+
 
 
 
@@ -17,21 +17,34 @@ def show_phone_book(request):
     return render(request, 'contacts/phone_book.html', {'phones': phones})
 
 
+
+
+@login_required
 def show_phone_book(request):
-    phone_list = Contact.objects.all() 
+    try:
+        per_page = int(request.GET.get('per_page', 5))
+    except (ValueError, TypeError):
+        per_page = 5
 
-    per_page = request.GET.get('per_page', 5)
-    per_page = int(per_page)
+    try:
+        page_number = int(request.GET.get('page', 1))
+    except (ValueError, TypeError):
+        page_number = 1 
 
-    paginator = Paginator(phone_list, per_page)  
+    total_contacts = Contact.objects.count()
+    total_pages = (total_contacts + per_page - 1) // per_page  
 
-    page_number = request.GET.get('page')  
-    phones = paginator.get_page(page_number)  
+    page_number = max(1, min(page_number, total_pages))
+
+    offset = (page_number - 1) * per_page
+    phones = Contact.objects.all()[offset:offset + per_page]
 
     return render(request, 'contacts/phone_book.html', {
         'phones': phones,
-        'per_page': per_page,  
-    })                   
+        'page_number': page_number,
+        'total_pages': total_pages,
+        'per_page': per_page,
+    })
 
 
 @login_required

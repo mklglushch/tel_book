@@ -9,3 +9,4 @@ my_site/db.sqlite3
 /my_site/tel_book/migrations/__pycache__
 /my_site/my_site/__pycache__
 
+my_site/db.sqlite3
