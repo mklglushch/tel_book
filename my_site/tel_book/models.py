@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from datetime import datetime
+
 
 
 
@@ -12,7 +14,7 @@ class Contact(models.Model):
     type_contact = models.CharField(max_length=255)
     phone = models.TextField(max_length=12)
     email = models.TextField(max_length=255, blank=True)
-
+    date_create = models.DateField(null=False, default=datetime(2023, 3, 21))
 
     def __str__(self):
         return self.title

@@ -37,18 +37,20 @@
                     <th data-type="string">Тип контакту <span class="arrow"></span></th>
                     <th data-type="number">Номер телефону <span class="arrow"></span></th>
                     <th data-type="string">Електронна адреса <span class="arrow"></span></th>
+                    <th data-type="string">Дата створення <span class="arrow"></span></th>
                     <th>Дії</th>
                 </tr>
             </thead>
             <tbody>
                 {% for p in phones %}
-                <tr>
+                <tr class="table">
                     <td>{{ p.surname }}</td>
                     <td>{{ p.name }}</td>
                     <td>{{ p.father_name }}</td>
                     <td>{{ p.type_contact }}</td>
                     <td>{{ p.phone }}</td>
                     <td>{{ p.email }}</td>
+                    <td>{{ p.date_create}}</td>
                     <td>
                         <a href="{% url 'edit_contact' p.id %}" class="btn btn-sm btn-primary">Редагувати</a>
                         <form action="{% url 'delete_contact' p.id %}" method="post" style="display: inline">
@@ -62,20 +64,14 @@
         </table>
 
         
-        
-
-
-
         <!-- Add Contact Button -->
          <div class="button_container">
             <a href="{% url 'add_contact' %}" class="btn btn-success">Додати новий контакт</a>
             <form id="uploadForm" action="{% url 'upload_csv' %}" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 
-                <!-- Невидиме поле для вибору файлів -->
                 <input type="file" id="file" name="file" accept=".csv, .xls, .xlsx" style="display:none;" />
                 
-                <!-- Кнопка для вибору файлів -->
                 <button type="button" class="btn btn-primary" id="uploadButton">Імпорт контактів з csv/xls</button>
             </form>
         </div>
@@ -104,14 +100,19 @@
                   <input type="hidden" name="page" value="{{ page_obj.number }}">
               </form>
           </div>
-      
+          
+        <form method="POST" action="{% url 'download_xls' %}" id="html_form">
+            {% csrf_token %}
+            <button type="submit">Завантажити</button>
+        </form>
+
           <div>
             {% if page_number > 1 %}
-                <a href="?page={{ page_number|add:'-1' }}&per_page={{ per_page }}">← Попередня</a>
+                <a href="?page={{ page_number|add:'-1' }}&per_page={{ per_page }}">🡄</a>
             {% endif %}
-            <span>Сторінка {{ page_number }} з {{ total_pages }}</span>
+            Сторінка <a href="?page={{ page_number }}">{{ page_number }}</a> з {{ total_pages }}
             {% if page_number < total_pages %}
-                <a href="?page={{ page_number|add:'1' }}&per_page={{ per_page }}">Наступна →</a>
+                <a href="?page={{ page_number|add:'1' }}&per_page={{ per_page }}"> 🡆</a>
             {% endif %}
         </div>
         
