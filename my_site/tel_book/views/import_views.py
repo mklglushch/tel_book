@@ -6,8 +6,6 @@ import openpyxl
 import pandas as pd
 
 
-
-
 def upload_csv(file, request):
     try:
         file_data = file.read().decode('utf-8').splitlines()
@@ -76,6 +74,7 @@ def upload_xls(file, request):
         print(f'Неочікувана помилка: {e}')
         return HttpResponse(f'Помилка при обробці файлу: {e}', status=500)
 
+
 def upload_file(request):
     if request.method == 'POST' and request.FILES['file']:
         uploaded_file = request.FILES['file']
@@ -92,3 +91,35 @@ def upload_file(request):
         return redirect('phone_book')
 
     return render(request, 'upload.html')  
+
+
+
+def parse_html(request):
+    if request.method == "POST":
+        contacts = Contact.objects.all().order_by('date_create')
+
+        contact_list = []
+        for c in contacts:
+            if int(c.date_create.strftime('%Y')) >= 2023:  
+                                contact_list.append({
+                                                    "ID": c.id,
+                                                    "Прізвище": c.surname, 
+                                                    "Ім'я": c.name,    
+                                                    "По-батькові": c.father_name,  
+                                                    "Тип контакту": c.type_contact,  
+                                                    "Телефон": c.phone,     
+                                                    "Email": c.email,    
+                                                    "Дата створення": c.date_create.strftime('%Y-%m-%d')
+                                                })
+        df = pd.DataFrame(contact_list)
+        response = HttpResponse(
+            content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+        )
+        response['Content-Disposition'] = 'attachment; filename="contacts.xlsx"'
+
+        df.to_excel(response, index=False)
+
+        return response
+
+
+    return HttpResponse("Помилка: не отримано HTML", status=400)
